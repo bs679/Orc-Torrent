@@ -1,6 +1,6 @@
 use std::{
     cmp::Reverse,
-    net::{Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6},
+    net::{Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6},
     str::FromStr,
     sync::{
         Arc,
@@ -1296,17 +1296,31 @@ impl DhtState {
     #[inline(never)]
     pub fn with_config<'a>(mut config: DhtConfig<'a>) -> BoxFuture<'a, crate::Result<Arc<Self>>> {
         async move {
-            let addr = config
+            let addr: SocketAddr = config
                 .listen_addr
                 .unwrap_or((Ipv6Addr::UNSPECIFIED, 0).into());
-            let socket = UdpSocket::bind_udp(
-                addr,
-                librqbit_dualstack_sockets::BindOpts {
-                    request_dualstack: true,
-                    reuseport: false,
-                    device: config.bind_device,
-                },
-            )
+            let bind = |addr: SocketAddr| {
+                UdpSocket::bind_udp(
+                    addr,
+                    librqbit_dualstack_sockets::BindOpts {
+                        request_dualstack: true,
+                        reuseport: false,
+                        device: config.bind_device,
+                    },
+                )
+            };
+            let socket = match bind(addr) {
+                // The IPv6 socket could not even be created: the host has no IPv6 support.
+                // A wildcard IPv6 address carries no intent beyond "any", so use IPv4 instead.
+                Err(librqbit_dualstack_sockets::Error::SocketNew(e))
+                    if addr.is_ipv6() && addr.ip().is_unspecified() =>
+                {
+                    let addr: SocketAddr = (Ipv4Addr::UNSPECIFIED, addr.port()).into();
+                    debug!("IPv6 UDP socket unavailable ({e}), binding DHT to {addr}");
+                    bind(addr)
+                }
+                other => other,
+            }
             .map_err(|e| Error::Bind(Box::new(e)))?;
 
             let listen_addr = socket.bind_addr();

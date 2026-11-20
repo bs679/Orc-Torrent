@@ -11,6 +11,9 @@ All notable changes to ORC Torrent are documented here. The format is based on [
 - **Desktop dependencies** — Upgrade Electron to 45 and Vitest to 5, and bump the `js-yaml` and `@xmldom/xmldom` overrides to patched releases. `npm audit` reports no vulnerabilities. Building now requires Node.js 22.12 or newer.
 - **Rust dependencies** — Update `h2`, `quinn-proto`, `quinn-udp`, `rustls`, `rustls-webpki`, and `webpki-roots` to patched releases.
 - **uTP ring buffer** — Vendor `librqbit-utp` 0.6.3 at `crates/librqbit-utp-patched` on `ringbuf` 0.5 to clear RUSTSEC-2026-0293, which no upstream release fixes. `cargo audit` reports no vulnerabilities.
+### Fixed
+
+- **Startup without IPv6** — The daemon no longer exits on hosts whose kernel has no IPv6 support. The UDP tracker client, DHT, and peer listener fall back to IPv4 when an IPv6 socket cannot be created. Strict network binding still refuses the degraded listener.
 
 ### Removed
 
