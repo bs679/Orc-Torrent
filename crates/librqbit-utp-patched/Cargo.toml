@@ -1,0 +1,54 @@
+# Vendored from librqbit-utp 0.6.3 (https://github.com/ikatson/librqbit-utp, Apache-2.0).
+# ORC patch: ringbuf 0.4 -> 0.5.2 to clear RUSTSEC-2026-0293. Upstream examples and the
+# dependencies only they used are not vendored.
+[package]
+name = "librqbit-utp"
+version = "0.6.3"
+edition = "2024"
+description = "uTP (uTorrent Transport Protocol) library, implements BEP 29"
+license = "Apache-2.0"
+repository = "https://github.com/ikatson/librqbit-utp"
+readme = "README.md"
+publish = false
+
+[features]
+default = []
+
+# Turn on to export metrics to the metrics crate, which can be exported e.g. using
+# prometheus exporter.
+export-metrics = ["metrics"]
+
+# This will export metrics per connection. Use this for debugging mostly, as running this in prod
+# may be costly - produces too many metrics and they aren't GC'ed by the metrics crate.
+per-connection-metrics = ["metrics"]
+
+[dependencies]
+tokio = { version = "1", features = [
+    "net",
+    "sync",
+    "time",
+    "io-util",
+    "rt",
+    "macros",
+] }
+rand = "0.9"
+tracing = "0.1.41"
+parking_lot = "0.12.3"
+bitvec = "1.0.1"
+rustc-hash = "2.1.1"
+tokio-util = "0.7.13"
+ringbuf = "0.5.2"
+metrics = { version = "0.24.1", optional = true }
+lazy_static = "1.5.0"
+socket2 = { version = "0.6", features = ["all"] }
+dontfrag = { version = "1.0.1", features = ["tokio"] }
+libc = "0.2.172"
+librqbit-dualstack-sockets = "0.6.11"
+thiserror = "2.0.12"
+
+[dev-dependencies]
+anyhow = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+futures = "0.3"
+approx = "0.5.1"

@@ -8,7 +8,7 @@ The official website is shown on both loading experiences, in the General settin
 
 ## Requirements
 
-- Node.js 20+
+- Node.js 22.12+
 - npm
 - Built `orc-daemon` binary (see repository root [README](../README.md) or [Install-Instructions](../Install-Instructions/))
 
