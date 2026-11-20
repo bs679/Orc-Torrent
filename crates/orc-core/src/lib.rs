@@ -2416,13 +2416,18 @@ fn update_piece_availability_from_peers(
     }
     if let Some(old_progress) = rec.runtime.peer_progress_cache.get(peer_id) {
         let old_pieces = (*old_progress * total_pieces as f32).ceil() as usize;
-        for i in 0..old_pieces.min(total_pieces) {
-            rec.runtime.piece_availability[i] = rec.runtime.piece_availability[i].saturating_sub(1);
+        for count in rec.runtime.piece_availability.iter_mut().take(old_pieces) {
+            *count = count.saturating_sub(1);
         }
     }
     let pieces_peer_has = (peer_progress * total_pieces as f32).ceil() as usize;
-    for i in 0..pieces_peer_has.min(total_pieces) {
-        rec.runtime.piece_availability[i] = rec.runtime.piece_availability[i].saturating_add(1);
+    for count in rec
+        .runtime
+        .piece_availability
+        .iter_mut()
+        .take(pieces_peer_has)
+    {
+        *count = count.saturating_add(1);
     }
     rec.runtime
         .peer_progress_cache
@@ -2435,9 +2440,13 @@ fn remove_peer_from_availability(rec: &mut TorrentRecord, peer_id: &str) {
         let total_pieces = rec.runtime.total_pieces_estimate as usize;
         if rec.runtime.piece_availability.len() == total_pieces {
             let pieces_peer_had = (progress * total_pieces as f32).ceil() as usize;
-            for i in 0..pieces_peer_had.min(total_pieces) {
-                rec.runtime.piece_availability[i] =
-                    rec.runtime.piece_availability[i].saturating_sub(1);
+            for count in rec
+                .runtime
+                .piece_availability
+                .iter_mut()
+                .take(pieces_peer_had)
+            {
+                *count = count.saturating_sub(1);
             }
         }
     }
