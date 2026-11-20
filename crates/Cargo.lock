@@ -2901,7 +2901,7 @@ checksum = "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d"
 
 [[package]]
 name = "orc-android"
-version = "2.5.0"
+version = "2.5.1"
 dependencies = [
  "anyhow",
  "jni",
@@ -2916,7 +2916,7 @@ dependencies = [
 
 [[package]]
 name = "orc-core"
-version = "2.5.0"
+version = "2.5.1"
 dependencies = [
  "anyhow",
  "base64",
@@ -2937,7 +2937,7 @@ dependencies = [
 
 [[package]]
 name = "orc-daemon"
-version = "2.5.0"
+version = "2.5.1"
 dependencies = [
  "aes-gcm",
  "anyhow",
@@ -2969,7 +2969,7 @@ dependencies = [
 
 [[package]]
 name = "orc-engine"
-version = "2.5.0"
+version = "2.5.1"
 dependencies = [
  "anyhow",
  "librqbit",
@@ -2982,7 +2982,7 @@ dependencies = [
 
 [[package]]
 name = "orc-mse"
-version = "2.5.0"
+version = "2.5.1"
 dependencies = [
  "hex 0.4.3",
  "librqbit-sha1-wrapper",
@@ -2998,7 +2998,7 @@ dependencies = [
 
 [[package]]
 name = "orc-scheduler"
-version = "2.5.0"
+version = "2.5.1"
 dependencies = [
  "serde",
 ]

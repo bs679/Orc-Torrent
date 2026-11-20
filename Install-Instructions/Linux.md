@@ -23,7 +23,7 @@ Install the following and ensure they are on your `PATH`:
 sudo apt update
 sudo apt install -y build-essential curl
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-# Install Node.js 20+ via NodeSource or nvm, then:
+# Install Node.js 22.12+ via NodeSource or nvm, then:
 ```
 
 **Verify installations:**
@@ -127,4 +127,4 @@ This starts the daemon (if needed), Vite dev server, and Electron with hot-reloa
 
 - **Desktop integration:** After installation, ORC Torrent should appear in your application menu and support magnet and `.torrent` file associations if configured in electron-builder.
 - **Dependencies:** If the Electron app fails to start, you may need extra libraries (e.g. for graphics or audio). See [Electron Linux requirements](https://www.electronjs.org/docs/latest/tutorial/support#linux) for common packages (e.g. `libgtk-3-0`, `libnotify`, etc.).
-- **Other distros:** The same steps apply on Fedora, Arch, etc.; install Rust, Node.js 20+, and a C/build toolchain appropriate for your distribution.
+- **Other distros:** The same steps apply on Fedora, Arch, etc.; install Rust, Node.js 22.12+, and a C/build toolchain appropriate for your distribution.
