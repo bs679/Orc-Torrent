@@ -6,6 +6,10 @@ All notable changes to ORC Torrent are documented here. The format is based on [
 
 ## [Unreleased]
 
+### Fixed
+
+- **Startup without IPv6** — The daemon no longer exits on hosts whose kernel has no IPv6 support. The UDP tracker client, DHT, and peer listener fall back to IPv4 when an IPv6 socket cannot be created. Strict network binding still refuses the degraded listener.
+
 ### Removed
 
 - **Auto-updater** — Remove `electron-updater`, the Settings → Updates panel, the updater IPC surface, and the GitHub `publish` config. The app no longer checks for, downloads, or installs updates on its own; release builds no longer emit `latest*.yml` or blockmap metadata.
