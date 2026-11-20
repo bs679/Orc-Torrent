@@ -6,6 +6,12 @@ All notable changes to ORC Torrent are documented here. The format is based on [
 
 ## [Unreleased]
 
+### Security
+
+- **Desktop dependencies** — Upgrade Electron to 45 and Vitest to 5, and bump the `js-yaml` and `@xmldom/xmldom` overrides to patched releases. `npm audit` reports no vulnerabilities. Building now requires Node.js 22.12 or newer.
+- **Rust dependencies** — Update `h2`, `quinn-proto`, `quinn-udp`, `rustls`, `rustls-webpki`, and `webpki-roots` to patched releases.
+- **uTP ring buffer** — Vendor `librqbit-utp` 0.6.3 at `crates/librqbit-utp-patched` on `ringbuf` 0.5 to clear RUSTSEC-2026-0293, which no upstream release fixes. `cargo audit` reports no vulnerabilities.
+
 ### Removed
 
 - **Auto-updater** — Remove `electron-updater`, the Settings → Updates panel, the updater IPC surface, and the GitHub `publish` config. The app no longer checks for, downloads, or installs updates on its own; release builds no longer emit `latest*.yml` or blockmap metadata.

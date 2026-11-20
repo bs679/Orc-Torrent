@@ -8,6 +8,7 @@ members = [
   "orc-daemon",
   "orc-android",
   "librqbit-v9-patched",
+  "librqbit-utp-patched",
   "rqbit-v9/*",
 ]
 
@@ -104,3 +105,5 @@ zeroize = "1.8"
 [patch.crates-io]
 # Tagged rqbit v9.0.0-beta.2 with ORC's embedded-runtime and storage patches.
 librqbit = { path = "librqbit-v9-patched" }
+# librqbit-utp 0.6.3 ported to ringbuf 0.5 (RUSTSEC-2026-0293); no upstream release has the fix.
+librqbit-utp = { path = "librqbit-utp-patched" }
