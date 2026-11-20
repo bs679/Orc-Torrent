@@ -269,15 +269,26 @@ impl UdpTrackerClient {
         cancel_token: CancellationToken,
         bind_device: Option<&BindDevice>,
     ) -> anyhow::Result<Self> {
+        let bind = |addr: SocketAddr| {
+            UdpSocket::bind_udp(
+                addr,
+                librqbit_dualstack_sockets::BindOpts {
+                    device: bind_device,
+                    ..Default::default()
+                },
+            )
+        };
         let addr = SocketAddr::new(IpAddr::V6(Ipv6Addr::UNSPECIFIED), 0);
-        let sock = UdpSocket::bind_udp(
-            addr,
-            librqbit_dualstack_sockets::BindOpts {
-                device: bind_device,
-                ..Default::default()
-            },
-        )
-        .with_context(|| format!("error creating UDP socket at {addr}"))?;
+        let sock = match bind(addr) {
+            // The IPv6 socket could not even be created: the host has no IPv6 support.
+            // Fall back to an IPv4-only socket instead of failing the whole session.
+            Err(librqbit_dualstack_sockets::Error::SocketNew(e)) => {
+                let addr = SocketAddr::new(IpAddr::V4(Ipv4Addr::UNSPECIFIED), 0);
+                debug!("IPv6 UDP socket unavailable ({e}), using {addr} for UDP trackers");
+                bind(addr).with_context(|| format!("error creating UDP socket at {addr}"))?
+            }
+            other => other.with_context(|| format!("error creating UDP socket at {addr}"))?,
+        };
 
         let client = Self {
             state: Arc::new(ClientShared {

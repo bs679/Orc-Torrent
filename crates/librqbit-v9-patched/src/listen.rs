@@ -8,7 +8,7 @@ use librqbit_dualstack_sockets::{BindOpts, TcpListener};
 use librqbit_utp::{BindDevice, UtpSocketUdp, UtpSocketUdpOpts};
 use tokio::io::AsyncWrite;
 use tokio_util::sync::CancellationToken;
-use tracing::info;
+use tracing::{info, warn};
 
 use crate::{stream_connect::ConnectionKind, vectored_traits::AsyncReadVectored};
 
@@ -72,6 +72,19 @@ impl Default for ListenerOptions {
     }
 }
 
+/// Whether this host can create IPv6 sockets at all (the kernel may be built or booted without IPv6).
+fn host_supports_ipv6() -> bool {
+    match std::net::UdpSocket::bind((Ipv6Addr::UNSPECIFIED, 0)) {
+        Ok(_) => true,
+        // Address-family errors surface as uncategorized or unsupported; an address that is
+        // merely unavailable or in use still means the family exists.
+        Err(e) => matches!(
+            e.kind(),
+            std::io::ErrorKind::AddrInUse | std::io::ErrorKind::PermissionDenied
+        ),
+    }
+}
+
 impl ListenerOptions {
     pub(crate) async fn start(
         mut self,
@@ -83,6 +96,18 @@ impl ListenerOptions {
         utp_opts.cancellation_token = cancellation_token.clone();
         utp_opts.parent_span = parent_span;
         utp_opts.dont_wait_for_lastack = true;
+
+        // A wildcard IPv6 listen address on a host without IPv6 support can never bind.
+        // Degrade to IPv4-only unless the caller demanded every requested transport.
+        if !self.ipv4_only
+            && !self.require_all_transports
+            && self.listen_addr.is_ipv6()
+            && self.listen_addr.ip().is_unspecified()
+            && !host_supports_ipv6()
+        {
+            warn!("IPv6 is not available on this host, listening on IPv4 only");
+            self.ipv4_only = true;
+        }
 
         let mut listen_addr = if self.ipv4_only {
             if self.listen_addr.is_ipv6() && self.listen_addr.ip().is_unspecified() {
