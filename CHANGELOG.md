@@ -6,6 +6,10 @@ All notable changes to ORC Torrent are documented here. The format is based on [
 
 ## [Unreleased]
 
+### Removed
+
+- **Auto-updater** — Remove `electron-updater`, the Settings → Updates panel, the updater IPC surface, and the GitHub `publish` config. The app no longer checks for, downloads, or installs updates on its own; release builds no longer emit `latest*.yml` or blockmap metadata.
+
 ### Changed
 
 - **Android release signing** — Production APKs are signed locally; CI compiles an unsigned release APK and runs emulator tests without storing the Android keystore in repository secrets.

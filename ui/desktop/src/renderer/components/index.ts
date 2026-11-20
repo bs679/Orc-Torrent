@@ -20,7 +20,6 @@ export { EventsPage } from "./EventsPage";
 export { SecuritySettings } from "./SecuritySettings";
 export { EngineSettings } from "./EngineSettings";
 export { NotificationSoundSettings } from "./NotificationSoundSettings";
-export { UpdateSettings } from "./UpdateSettings";
 export { SearchPage } from "./SearchPage";
 export { SearchSettingsPanel } from "./SearchSettingsPanel";
 export { FileSelectionDialog } from "./FileSelectionDialog";

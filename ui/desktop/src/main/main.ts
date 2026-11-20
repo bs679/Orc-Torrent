@@ -42,7 +42,6 @@ import {
   type AppThemeState,
   type ResolvedAppTheme,
 } from "../shared/appThemeRegistry.js";
-import { initUpdater, registerUpdaterIpc } from "./updater.js";
 import { getEditionBranding, isAnimusEdition } from "../shared/appEdition.js";
 
 function guardStdioPipe(stream: NodeJS.WriteStream | null | undefined): void {
@@ -3418,8 +3417,6 @@ app
         return nextState;
       });
 
-      registerUpdaterIpc(() => mainWindow, gracefulShutdownIfOwned);
-
       ipcMain.handle("edition:get-branding", async () => desktopEditionBranding);
 
       // Firewall management (Windows only; validated options)
@@ -4037,10 +4034,6 @@ app
 
       // Create window immediately (hidden) so it can load in background
       createWindow();
-
-      if (app.isPackaged) {
-        initUpdater(() => mainWindow, gracefulShutdownIfOwned);
-      }
 
       // Start daemon in background (don't block window creation)
       startDaemonIfNeeded()

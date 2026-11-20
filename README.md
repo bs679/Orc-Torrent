@@ -136,7 +136,7 @@ For complete download-verification, sideloading, onboarding, updating, and troub
 
 1. Start **ORC TORRENT**. Desktop launches its local daemon automatically; Android starts the same Rust engine on-device.
 2. Add torrents via drag-and-drop or file picker on desktop, or the Add sheet and Android Open With/Share flows on mobile. Both platforms accept magnet links and `.torrent` files.
-3. Desktop can use **Settings → Updates**. Android updates are installed by downloading the next signed APK from GitHub Releases and installing it over the existing app.
+3. This fork has no auto-updater. Desktop updates are installed by building or downloading a newer version yourself; Android updates are installed by downloading the next signed APK from GitHub Releases and installing it over the existing app.
 
 To compile from source instead of using a release build, see [Building from source](#building-from-source) and [Install-Instructions](Install-Instructions/).
 
@@ -190,7 +190,6 @@ Screenshots of the ORC Torrent desktop client:
 | **Bandwidth scheduling** | Normal and limited speed profiles with quiet-hours schedule. |
 | **Privacy dashboard** | Consolidated VPN/kill-switch risk card with one-click VPN Safety Mode. |
 | **Network page** | Adapter list, default route, DNS, VPN signal, and kill-switch enforcement status. |
-| **GitHub auto-update** | Check for updates, download in the background, and restart to install from Settings → Updates. |
 | **VPN transfer pause** | VPN interface detection (e.g. tun/wg); optionally closes ORC transfer/discovery sockets when the VPN disconnects. This is not an OS firewall. |
 | **ORC Engine** | Shared desktop/Android transfer facade (`orc-engine`) with capabilities API, legacy/modern swarm modes, and truthful runtime privacy status. |
 | **Peer traffic obfuscation** | Opt-in MSE/PE (RC4) over TCP via `orc-mse` — `off`, `prefer`, or `require`. Obfuscation only; not anonymity. |

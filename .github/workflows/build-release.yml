@@ -246,8 +246,6 @@ jobs:
             ui/desktop/release/*.dmg
             ui/desktop/release/*.zip
             ui/desktop/release/*.pkg
-            ui/desktop/release/latest*.yml
-            ui/desktop/release/*.blockmap
           if-no-files-found: error
 
   build-macos-intel:
@@ -285,8 +283,6 @@ jobs:
             ui/desktop/release/*.dmg
             ui/desktop/release/*.zip
             ui/desktop/release/*.pkg
-            ui/desktop/release/latest*.yml
-            ui/desktop/release/*.blockmap
           if-no-files-found: error
 
   build-linux:
@@ -335,8 +331,6 @@ jobs:
           path: |
             ui/desktop/release/*.AppImage
             ui/desktop/release/*.deb
-            ui/desktop/release/latest*.yml
-            ui/desktop/release/*.blockmap
           if-no-files-found: error
 
   build-windows:
@@ -373,8 +367,6 @@ jobs:
           path: |
             ui/desktop/release/*.exe
             ui/desktop/release/*.zip
-            ui/desktop/release/latest*.yml
-            ui/desktop/release/*.blockmap
           if-no-files-found: error
 
 

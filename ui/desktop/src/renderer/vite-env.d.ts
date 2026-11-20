@@ -66,13 +66,6 @@ declare global {
           payload: { type: "builtin" } | { type: "default"; filename: string } | { type: "custom" }
         ) => Promise<{ buffer: Uint8Array; mime: string } | null>;
       };
-      updater?: {
-        getStatus: () => Promise<import("../shared/updaterTypes").UpdateStatus>;
-        check: () => Promise<import("../shared/updaterTypes").UpdateStatus>;
-        setAutoCheck: (enabled: boolean) => Promise<import("../shared/updaterTypes").UpdateStatus>;
-        install: () => Promise<{ success: boolean; error?: string }>;
-        onStatusChanged: (callback: (status: import("../shared/updaterTypes").UpdateStatus) => void) => () => void;
-      };
       edition?: {
         getBranding: () => Promise<import("../shared/appEdition").EditionBranding>;
       };
