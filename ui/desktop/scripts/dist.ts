@@ -1386,7 +1386,6 @@ if (animusBuild) {
     "--config.mac.icon",
     animusMacIcon
   );
-  console.log("   AnimUS build: GitHub auto-update metadata disabled.\n");
 }
 
 if (tempOutputDir) {

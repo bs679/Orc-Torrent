@@ -6,7 +6,6 @@
   "tagline": "AnimUS Edition · graffiti build",
   "badgeLabel": "AnimUS Edition",
   "accentColor": "#7cff00",
-  "autoUpdate": false,
   "artifactSuffix": "AnimUS",
   "configFolderName": "OrcTorrent-AnimUS",
   "logoUrl": "./images/animus-edition.png",

@@ -33,7 +33,6 @@ import {
   EngineSettings,
   DaemonControl,
   NotificationSoundSettings,
-  UpdateSettings,
   PrivacyStatusCard,
   WatchFoldersSettings,
   SeedingSettingsPanel,
@@ -1487,11 +1486,6 @@ export default function App() {
               <button type="button" className="btn primary" onClick={() => void handleOpenOfficialWebsite()}>
                 Visit Orclabs.io ↗
               </button>
-            </div>
-
-            <div className="settingsSectionCard settingsSectionCardWide">
-              <h2 className="settingsSectionCardTitle">Updates</h2>
-              <UpdateSettings onError={(msg) => pushToast("error", msg)} onSuccess={(msg) => pushToast("info", msg)} />
             </div>
 
             <div className="settingsSectionCard settingsSummaryCard">

@@ -129,21 +129,6 @@ contextBridge.exposeInMainWorld("orc", {
         mime: string;
       } | null>,
   },
-  updater: {
-    getStatus: () => ipcRenderer.invoke("updater:get-status"),
-    check: () => ipcRenderer.invoke("updater:check"),
-    setAutoCheck: (enabled: boolean) => ipcRenderer.invoke("updater:set-auto-check", enabled),
-    install: () => ipcRenderer.invoke("updater:install"),
-    onStatusChanged: (callback: (status: unknown) => void) => {
-      const handler = (_event: Electron.IpcRendererEvent, status: unknown) => {
-        callback(status);
-      };
-      ipcRenderer.on("updater:status-changed", handler);
-      return () => {
-        ipcRenderer.removeListener("updater:status-changed", handler);
-      };
-    },
-  },
   edition: {
     getBranding: () => ipcRenderer.invoke("edition:get-branding"),
   },

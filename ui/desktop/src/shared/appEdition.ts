@@ -12,7 +12,6 @@ export interface EditionBranding {
   tagline: string;
   badgeLabel: string;
   accentColor: string;
-  autoUpdate: boolean;
   artifactSuffix: string;
   configFolderName: string;
   logoUrl: string;
@@ -35,7 +34,6 @@ const STANDARD_BRANDING: EditionBranding = {
   tagline: "Private torrent client",
   badgeLabel: "",
   accentColor: "",
-  autoUpdate: true,
   artifactSuffix: "",
   configFolderName: "OrcTorrent",
   logoUrl: "./images/orctorrent-logo.png",
@@ -58,7 +56,6 @@ const ANIMUS_FALLBACK_BRANDING: EditionBranding = {
   tagline: "AnimUS Edition · graffiti build",
   badgeLabel: "AnimUS Edition",
   accentColor: "#7cff00",
-  autoUpdate: false,
   artifactSuffix: "AnimUS",
   configFolderName: "OrcTorrent-AnimUS",
   logoUrl: "./images/animus/ui-logo.png",
@@ -113,6 +110,5 @@ export function getEditionBranding(desktopRoot: string): EditionBranding {
     ...ANIMUS_FALLBACK_BRANDING,
     ...manifest,
     edition: ANIMUS_EDITION,
-    autoUpdate: manifest.autoUpdate ?? false,
   };
 }
